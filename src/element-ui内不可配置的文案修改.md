@@ -82,3 +82,5 @@ const i18n = new VueI18n({
 ElementLocale.i18n((key, value) => i18n.t(key, value))
 即可。参考https://element.eleme.io/#/zh-CN/component/i18n
 ```
+
+[可参考这个demo](https://github.com/benfangdesaozhu/study/tree/master/webpack/test)
