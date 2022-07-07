@@ -39,3 +39,42 @@ $ nrm ls
 # 使用源
 $ nrm use taobao
 ```
+
+### 本地安装docker并发布项目
+
+1、[下载docker](https://docs.docker.com/get-docker/)
+
+2、在要发布的项目的根目录下创建Dockerfile文件（此处以nuxt为例）
+
+3、在Dockerfile文件中写构建镜像的文本
+
+```
+FROM node:12-alpine
+RUN npm install pm2 -g
+RUN mkdir -p /app
+COPY ./ /app
+WORKDIR /app
+EXPOSE 3001
+RUN npm config set registry https://registry.npm.taobao.org
+RUN npm install
+RUN npm run build
+CMD ["pm2-runtime","start","npm","--name","vr-website-frontend","--","run","start"
+```
+
+4、构建镜像（终端执行以下命令）
+
+```
+docker build -t nuxt-docker . 
+```
+
+5、启动容器
+
+```
+docker run -dp 3001:3000 nuxt-docker
+```
+
+6、这个时间打开浏览器 localhost:3001就可以访问了
+
+参考[前端学习的Docker入门指南](https://mp.weixin.qq.com/s/rpPYoR-OB0dXeeHG8hDG8w)
+
+[docker配置pm2](https://hub.docker.com/r/keymetrics/pm2)
